@@ -26,9 +26,9 @@
             "title": "Meta Tags",
             "category": "",
             "icon": {
-                "name": "",
-                "color": "",
-                "backgroundColor": ""
+                "name": "fas fa-share-alt",
+                "color": "#fff",
+                "backgroundColor": "#3b5998"
             }
         },
         "flarum-cli": {
