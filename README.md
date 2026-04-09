@@ -24,4 +24,4 @@ php flarum cache:clear
 
 - [Packagist](https://packagist.org/packages/dashzeveg/flarum-meta-tags)
 - [GitHub](https://github.com/dashzeveg/flarum-meta-tags)
-- [Discuss](https://discuss.flarum.org/d/PUT_DISCUSS_SLUG_HERE)
+- [Discuss](https://discuss.flarum.org/d/39045-flarum-meta-tags-open-graph-twitter-card-meta-description-for-flarum)
