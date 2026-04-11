@@ -56,8 +56,22 @@ return [
                         if ($firstPost) {
                             $content = $firstPost->content;
 
-                            // Extract description (strip HTML, limit to 200 chars)
-                            $ogDescription = Str::limit(strip_tags($content), 200);
+                            // Strip HTML tags
+                            $cleanContent = strip_tags($content);
+
+                            // Remove Markdown images: ![alt](url)
+                            $cleanContent = preg_replace('/!\[[^\]]*\]\([^)]+\)/', '', $cleanContent);
+
+                            // Remove Markdown links: [text](url) → keep text
+                            $cleanContent = preg_replace('/\[([^\]]*)\]\([^)]+\)/', '$1', $cleanContent);
+
+                            // Remove bare URLs
+                            $cleanContent = preg_replace('#https?://\S+#', '', $cleanContent);
+
+                            // Collapse extra whitespace
+                            $cleanContent = trim(preg_replace('/\s+/', ' ', $cleanContent));
+
+                            $ogDescription = Str::limit($cleanContent, 200);
 
                             // Extract first image from HTML
                             if (preg_match('/<img[^>]+src=["\']([^"\']+)["\']/i', $content, $imgMatches)) {
@@ -89,14 +103,14 @@ return [
             $document->head[] = '<meta property="og:title" content="' . e($ogTitle) . '" />';
             $document->head[] = '<meta property="og:description" content="' . e($ogDescription) . '" />';
             $document->head[] = '<meta property="og:image" content="' . e($ogImage) . '" />';
-            
+
 
             $document->head[] = '<meta property="twitter:card" content="summary_large_image" />';
             $document->head[] = '<meta property="twitter:site" content="@forexmn" />';
             $document->head[] = '<meta property="twitter:title" content="' . e($ogTitle) . '" />';
             $document->head[] = '<meta property="twitter:description" content="' . e($ogDescription) . '" />';
             $document->head[] = '<meta property="twitter:image" content="' . e($ogImage) . '" />';
-            
+
 
             $document->meta['description'] = e($ogDescription);
         }, 100),
