@@ -71,6 +71,9 @@ return [
                             // Collapse extra whitespace
                             $cleanContent = trim(preg_replace('/\s+/', ' ', $cleanContent));
 
+                            // Remove Markdown bold: **text** → text
+                            $cleanContent = preg_replace('/\*\*([^*]+)\*\*/', '$1', $cleanContent);
+
                             $ogDescription = Str::limit($cleanContent, 200);
 
                             // Extract first image from HTML
